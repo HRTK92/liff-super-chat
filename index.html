@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE スパチャ</title>
+</head>
+
+<body>
+    <input type="number" name="円" id="yen">
+    <textarea rows="10" id="contents">ここに記入してください</textarea>
+    <input type="button" value="送信" id="send">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script>
+        liff.init({
+            liffId: '1234567890-AbcdEfgh', // Use own liffId
+        })
+            .then(() => {
+                const idToken = liff.getDecodedIDToken();
+                window.idToken = idToken
+                console.log(idToken);
+            })
+            .catch((err) => {
+                alert(err);
+            });
+        $('#send').on('click', function () {
+            var yen = $('#yen').val()
+            var contents = $('#contents').val()
+            var color = ["#cc0000", "#ff0000"]
+            liff.sendMessages([{
+                "type": "flex",
+                "altText": "This is a Flex Message",
+                "contents": {
+                    "type": "bubble",
+                    "header": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "baseline",
+                                "contents": [
+                                    {
+                                        "type": "icon",
+                                        "url": window.idToken["picture"]
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": window.idToken["name"],
+                                        "color": "#ffffff",
+                                        "weight": "bold",
+                                        "size": "md"
+                                    }
+                                ],
+                                "margin": "none",
+                                "spacing": "none"
+                            },
+                            {
+                                "type": "text",
+                                "text": "¥" + yen, 
+                                "color": "#ffffff"
+                            }
+                        ],
+                        "backgroundColor": color[0]
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "size": "lg",
+                                "text": contents,
+                                "color": "#ffffff",
+                                "wrap": true
+                            }
+                        ],
+                        "backgroundColor": color[1]
+                    }
+                }
+            }])
+            liff.closeWindow();
+        });
+    </script>
+</body>
+
+</html>
