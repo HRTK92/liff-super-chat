@@ -24,6 +24,9 @@
             liffId: '1655627652-WxxyaNqw', // Use own liffId
         })
             .then(() => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
                 const idToken = liff.getDecodedIDToken();
                 window.idToken = idToken
                 console.log(idToken);
