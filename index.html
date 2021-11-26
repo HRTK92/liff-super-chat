@@ -62,7 +62,7 @@
                             },
                             {
                                 "type": "text",
-                                "text": "¥" + yen, 
+                                "text": "¥" + yen,
                                 "color": "#ffffff"
                             }
                         ],
@@ -84,7 +84,11 @@
                     }
                 }
             }])
-            liff.closeWindow();
+                .then(function () {
+                    liff.closeWindow();
+                }).catch(function (error) {
+                    alert(error);
+                });
         });
     </script>
 </body>
