@@ -58,7 +58,9 @@
             var yen = $('#yen').val()
             var contents = $('#contents').val()
             var text_color = "#fff"
-            if ($('input:radio[name="color_type"]:checked').val() == "auto") {
+            var color_type = $('input:radio[name="color_type"]:checked').val()
+            console.log(color_type)
+            if (color_type == "auto") {
                 if (yen <= 99) {
                     return
                 }
@@ -84,7 +86,7 @@
                 else if (10000 <= yen) {
                     var color = ["#cc0000", "#ff0000"]
                 }
-            } else if ($('input:radio[name="color_type"]:checked').val() == "manual") {
+            } else if (color_type == "manual") {
                     var color = ["#cc0000", "#ff0000"]
             }
             liff.sendMessages([{
