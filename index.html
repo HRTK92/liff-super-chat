@@ -6,15 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LINE スパチャ</title>
+
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
 </head>
 
 <body>
     <label for="yen">金額:</label>
-    <input type="number" name="円" id="yen">
+    <input class="uk-input" type="number" name="円" id="yen">
     <br>
     <label for="contents">内容:</label>
-    <textarea rows="10" id="contents"></textarea>
-    <input type="button" value="送信" id="send">
+    <textarea class="uk-textarea" rows="10" id="contents"></textarea>
+    <input class="uk-button uk-button-primary" type="button" value="送信" id="send">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
