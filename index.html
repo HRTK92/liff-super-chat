@@ -21,6 +21,11 @@
     <br>
     <label for="contents">内容:</label>
     <textarea class="uk-textarea" rows="10" id="contents"></textarea>
+
+    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+        <label><input class="uk-radio" type="radio" name="color_type" value="auto" checked> 金額によって色を変える</label>
+        <label><input class="uk-radio" type="radio" name="color_type" value="manual"> 色を指定</label>
+    </div>
     <input class="uk-button uk-button-primary" type="button" value="送信" id="send">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -52,7 +57,36 @@
         $('#send').on('click', function () {
             var yen = $('#yen').val()
             var contents = $('#contents').val()
-            var color = ["#cc0000", "#ff0000"]
+            var text_color = "#fff"
+            if ($('input:radio[name="color_type"]:checked').val() == "auto") {
+                if (yen <= 99) {
+                    return
+                }
+                else if (100 <= yen <= 199) {
+                    var color = ["#1e90ff", "#00bfff"]
+                }
+                else if (200 <= yen <= 499) {
+                    var color = ["#00bfff", "#a3d8f6"]
+                }
+                else if (500 <= yen <= 999) {
+                    var color = ["#00ff00", "#40ff40"]
+                }
+                else if (1000 <= yen <= 1999) {
+                    var color = ["#ffff00", "#ffff40"]
+                    text_color = "#000"
+                }
+                else if (2000 <= yen <= 4999) {
+                    var color = ["#ff8c00", "#ffd700"]
+                }
+                else if (5000 <= yen <= 9999) {
+                    var rcolor = ["#e4007f", "#ff1e9b"]
+                }
+                else if (10000 <= yen) {
+                    var color = ["#cc0000", "#ff0000"]
+                }
+            } else if ($('input:radio[name="color_type"]:checked').val() == "manual") {
+                    var color = ["#cc0000", "#ff0000"]
+            }
             liff.sendMessages([{
                 "type": "flex",
                 "altText": `${window.idToken["name"]}さんがスーパーキャットをしました。`,
@@ -73,7 +107,7 @@
                                     {
                                         "type": "text",
                                         "text": window.idToken["name"],
-                                        "color": "#ffffff",
+                                        "color": text_color,
                                         "weight": "bold",
                                         "size": "md"
                                     }
@@ -84,7 +118,7 @@
                             {
                                 "type": "text",
                                 "text": "¥" + yen,
-                                "color": "#ffffff"
+                                "color": text_color
                             }
                         ],
                         "backgroundColor": color[0]
@@ -97,7 +131,7 @@
                                 "type": "text",
                                 "size": "lg",
                                 "text": contents,
-                                "color": "#ffffff",
+                                "color": text_color,
                                 "wrap": true
                             }
                         ],
