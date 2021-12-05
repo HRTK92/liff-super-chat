@@ -55,7 +55,7 @@
                 alert(err);
             });
         $('#send').on('click', function () {
-            var yen = $('#yen').val()
+            var yen = Number($('#yen').val())
             var contents = $('#contents').val()
             var text_color = "#fff"
             var color_type = $('input:radio[name="color_type"]:checked').val()
@@ -119,7 +119,7 @@
                             },
                             {
                                 "type": "text",
-                                "text": "¥" + yen,
+                                "text": "¥" + String(yen),
                                 "color": text_color
                             }
                         ],
