@@ -47,7 +47,7 @@
         })();
     </script>
     <script>
-        $('#color_profile, #color_contents').hide();
+        $('#color_profile, #color_contents, #color_text, #color_label').hide();
         liff.init({
             liffId: '1655627652-WxxyaNqw', // Use own liffId
         })
@@ -162,7 +162,7 @@
             $('input[name="color_type"]:radio').change(function () {
                 var radioval = $(this).val();
                 if (radioval == "manual") {
-                    $('#color_profile, #color_contents').show();
+                    $('#color_profile, #color_contents, #color_text, #color_label').show();
                 } else {
                     $('#color_profile, #color_contents, #color_text, #color_label').hide();
                 }
