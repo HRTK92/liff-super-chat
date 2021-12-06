@@ -26,11 +26,11 @@
         <label><input class="uk-radio" type="radio" name="color_type" value="auto" checked> 金額によって色を変える</label>
         <label><input class="uk-radio" type="radio" name="color_type" value="manual"> 色を指定</label>
     </div>
-    <label for="color_profile">プロフィールの色</label>
+    <label for="color_profile" id="color_label">プロフィールの色</label>
     <input type="color" name="color_profile" id="color_profile" value="#cc0000">
-    <label for="color_contents">内容の色</label>
+    <label for="color_contents" id="color_label">内容の色</label>
     <input type="color" name="color_contents" id="color_contents" value="#ff0000">
-    <label for="color_text">文字の色</label>
+    <label for="color_text" id="color_label">文字の色</label>
     <input type="color" name="color_text" id="color_text" value="#ffffff">
 
     <input class="uk-button uk-button-primary" type="button" value="送信" id="send">
@@ -164,7 +164,7 @@
                 if (radioval == "manual") {
                     $('#color_profile, #color_contents').show();
                 } else {
-                    $('#color_profile, #color_contents').hide();
+                    $('#color_profile, #color_contents, #color_text, #color_label').hide();
                 }
             });
         });
