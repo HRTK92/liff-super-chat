@@ -26,6 +26,8 @@
         <label><input class="uk-radio" type="radio" name="color_type" value="auto" checked> 金額によって色を変える</label>
         <label><input class="uk-radio" type="radio" name="color_type" value="manual"> 色を指定</label>
     </div>
+    <input type="color" name="プロフィールの色" id="color_profile" value="#cc0000">
+    <input type="color" name="内容の色" id="color_contents" value="#ff0000">
     <input class="uk-button uk-button-primary" type="button" value="送信" id="send">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -40,6 +42,7 @@
         })();
     </script>
     <script>
+        $('#color_profile, #color_contents').hide();
         liff.init({
             liffId: '1655627652-WxxyaNqw', // Use own liffId
         })
@@ -87,7 +90,7 @@
                     var color = ["#cc0000", "#ff0000"]
                 }
             } else if (color_type == "manual") {
-                var color = ["#cc0000", "#ff0000"]
+                var color = [$('#color_profile').val(), $('#color_contents').val()]
             }
             console.log(color)
             liff.sendMessages([{
@@ -147,6 +150,17 @@
                 }).catch(function (error) {
                     alert(error);
                 });
+        });
+
+        $(function () {
+            $('input[name="color_type"]:radio').change(function () {
+                var radioval = $(this).val();
+                if (radioval == "manual") {
+                    $('#color_profile, #color_contents').show();
+                } else {
+                    $('#color_profile, #color_contents').hide();
+                }
+            });
         });
     </script>
 </body>
