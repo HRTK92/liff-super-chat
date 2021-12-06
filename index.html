@@ -67,7 +67,6 @@
             var contents = $('#contents').val()
             var text_color = "#FFFFFF"
             var color_type = $('input:radio[name="color_type"]:checked').val()
-            console.log(color_type)
             if (color_type == "auto") {
                 if (yen <= 99) {
                     console.log("error")
@@ -98,7 +97,6 @@
                 var color = [$('#color_profile').val(), $('#color_contents').val()]
                 text_color = $('#color_text').val()
             }
-            console.log(color)
             liff.sendMessages([{
                 "type": "flex",
                 "altText": `${window.idToken["name"]}さんがスーパーキャットをしました。`,
