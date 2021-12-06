@@ -17,7 +17,7 @@
 
 <body>
     <label for="yen">金額:</label>
-    <input class="uk-input" type="number" name="円" id="yen">
+    <input class="uk-input" type="number" name="円" id="yen" required>
     <br>
     <label for="contents">内容:</label>
     <textarea class="uk-textarea" rows="10" id="contents"></textarea>
@@ -64,30 +64,30 @@
                 if (yen <= 99) {
                     console.log("error")
                 }
-                else if (100 <= yen <= 199) {
+                else if (100 <= yen && yen <= 199) {
                     var color = ["#1e90ff", "#00bfff"]
                 }
-                else if (200 <= yen <= 499) {
+                else if (200 <= yen && yen <= 499) {
                     var color = ["#00bfff", "#a3d8f6"]
                 }
-                else if (500 <= yen <= 999) {
+                else if (500 <= yen && yen <= 999) {
                     var color = ["#00ff00", "#40ff40"]
                 }
-                else if (1000 <= yen <= 1999) {
+                else if (1000 <= yen && yen <= 1999) {
                     var color = ["#ffff00", "#ffff40"]
                     text_color = "#000"
                 }
-                else if (2000 <= yen <= 4999) {
+                else if (2000 <= yen && yen <= 4999) {
                     var color = ["#ff8c00", "#ffd700"]
                 }
-                else if (5000 <= yen <= 9999) {
+                else if (5000 <= yen && yen <= 9999) {
                     var color = ["#e4007f", "#ff1e9b"]
                 }
                 else if (10000 <= yen) {
                     var color = ["#cc0000", "#ff0000"]
                 }
             } else if (color_type == "manual") {
-                    var color = ["#cc0000", "#ff0000"]
+                var color = ["#cc0000", "#ff0000"]
             }
             console.log(color)
             liff.sendMessages([{
