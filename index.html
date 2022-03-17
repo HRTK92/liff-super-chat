@@ -2,171 +2,161 @@
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINE スパチャ</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>LINE スパチャ</title>
 
-    <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
-
-    <!-- UIkit JS -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+	<!-- UIkit CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+	<!-- UIkit JS -->
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
 </head>
 
 <body>
-    <label for="yen">金額:</label>
-    <input class="uk-input" type="number" name="円" id="yen" required>
-    <br>
-    <label for="contents">内容:</label>
-    <textarea class="uk-textarea" rows="10" id="contents"></textarea>
+	<label for="yen">金額:</label>
+	<input class="uk-input" type="number" name="円" id="yen" required>
+	<br>
+	<label for="contents">内容:</label>
+	<textarea class="uk-textarea" rows="10" id="contents"></textarea>
 
-    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-        <label><input class="uk-radio" type="radio" name="color_type" value="auto" checked> 金額によって色を変える</label>
-        <label><input class="uk-radio" type="radio" name="color_type" value="manual"> 色を指定</label>
-    </div>
-    <label for="color_profile" id="color_label">プロフィールの色</label>
-    <input type="color" name="color_profile" id="color_profile" value="#cc0000">
-    <label for="color_contents" id="color_label">内容の色</label>
-    <input type="color" name="color_contents" id="color_contents" value="#ff0000">
-    <label for="color_text" id="color_label">文字の色</label>
-    <input type="color" name="color_text" id="color_text" value="#ffffff">
+	<div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+		<label><input class="uk-radio" type="radio" name="color_type" value="auto" checked> 金額によって色を変える</label>
+		<label><input class="uk-radio" type="radio" name="color_type" value="manual"> 色を指定</label>
+	</div>
+	<label for="color_profile" id="color_label">プロフィールの色</label>
+	<input type="color" name="color_profile" id="color_profile" value="#cc0000">
+	<label for="color_contents" id="color_label">内容の色</label>
+	<input type="color" name="color_contents" id="color_contents" value="#ff0000">
+	<label for="color_text" id="color_label">文字の色</label>
+	<input type="color" name="color_text" id="color_text" value="#ffffff">
 
-    <input class="uk-button uk-button-primary" type="button" value="送信" id="send">
+	<input class="uk-button uk-button-primary" type="button" value="送信" id="send">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script>
-        ; (function () {
-            var src = '//cdn.jsdelivr.net/npm/eruda';
-            if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
-            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
-            document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
-        })();
-    </script>
-    <script>
-        $('#color_profile, #color_contents, #color_text, #color_label').hide();
-        liff.init({
-            liffId: '1655627652-WxxyaNqw', // Use own liffId
-        })
-            .then(() => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                }
-                const idToken = liff.getDecodedIDToken();
-                window.idToken = idToken
-                //console.log(idToken);
-            })
-            .catch((err) => {
-                alert(err);
-            });
-        $('#send').on('click', function () {
-            var yen = Number($('#yen').val())
-            var contents = $('#contents').val()
-            var text_color = "#FFFFFF"
-            var color_type = $('input:radio[name="color_type"]:checked').val()
-            if (color_type == "auto") {
-                if (yen <= 99) {
-                    console.log("error")
-                }
-                else if (100 <= yen && yen <= 199) {
-                    var color = ["#1e90ff", "#00bfff"]
-                }
-                else if (200 <= yen && yen <= 499) {
-                    var color = ["#00bfff", "#a3d8f6"]
-                }
-                else if (500 <= yen && yen <= 999) {
-                    var color = ["#00ff00", "#40ff40"]
-                }
-                else if (1000 <= yen && yen <= 1999) {
-                    var color = ["#ffff00", "#ffff40"]
-                    text_color = "#000000"
-                }
-                else if (2000 <= yen && yen <= 4999) {
-                    var color = ["#ff8c00", "#ffd700"]
-                }
-                else if (5000 <= yen && yen <= 9999) {
-                    var color = ["#e4007f", "#ff1e9b"]
-                }
-                else if (10000 <= yen) {
-                    var color = ["#cc0000", "#ff0000"]
-                }
-            } else if (color_type == "manual") {
-                var color = [$('#color_profile').val(), $('#color_contents').val()]
-                text_color = $('#color_text').val()
-            }
-            liff.sendMessages([{
-                "type": "flex",
-                "altText": `${window.idToken["name"]}さんがスーパーチャットをしました。`,
-                "contents": {
-                    "type": "bubble",
-                    "header": {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                            {
-                                "type": "box",
-                                "layout": "baseline",
-                                "contents": [
-                                    {
-                                        "type": "icon",
-                                        "url": window.idToken["picture"]
-                                    },
-                                    {
-                                        "type": "text",
-                                        "text": window.idToken["name"],
-                                        "color": text_color,
-                                        "weight": "bold",
-                                        "size": "md"
-                                    }
-                                ],
-                                "margin": "none",
-                                "spacing": "none"
-                            },
-                            {
-                                "type": "text",
-                                "text": "¥" + String(yen),
-                                "color": text_color
-                            }
-                        ],
-                        "backgroundColor": color[0]
-                    },
-                    "body": {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [
-                            {
-                                "type": "text",
-                                "size": "lg",
-                                "text": contents,
-                                "color": text_color,
-                                "wrap": true
-                            }
-                        ],
-                        "backgroundColor": color[1]
-                    }
-                }
-            }])
-                .then(function () {
-                    liff.closeWindow();
-                }).catch(function (error) {
-                    alert(error);
-                });
-        });
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+	<script>
+		$('#color_profile, #color_contents, #color_text, #color_label').hide();
+		liff.init({
+			liffId: '1655627652-WxxyaNqw',
+		})
+			.then(() => {
+				if (!liff.isLoggedIn()) {
+					liff.login();
+				}
+				const idToken = liff.getDecodedIDToken();
+				window.idToken = idToken
+			})
+			.catch((err) => {
+				alert(err);
+			});
+		$('#send').on('click', function () {
+			var yen = Number($('#yen').val())
+			var contents = $('#contents').val()
+			var text_color = "#FFFFFF"
+			var color_type = $('input:radio[name="color_type"]:checked').val()
+			if (color_type == "auto") {
+				if (yen <= 99) {
+					console.log("error")
+				}
+				else if (100 <= yen && yen <= 199) {
+					var color = ["#1e90ff", "#00bfff"]
+				}
+				else if (200 <= yen && yen <= 499) {
+					var color = ["#00bfff", "#a3d8f6"]
+				}
+				else if (500 <= yen && yen <= 999) {
+					var color = ["#00ff00", "#40ff40"]
+				}
+				else if (1000 <= yen && yen <= 1999) {
+					var color = ["#ffff00", "#ffff40"]
+					text_color = "#000000"
+				}
+				else if (2000 <= yen && yen <= 4999) {
+					var color = ["#ff8c00", "#ffd700"]
+				}
+				else if (5000 <= yen && yen <= 9999) {
+					var color = ["#e4007f", "#ff1e9b"]
+				}
+				else if (10000 <= yen) {
+					var color = ["#cc0000", "#ff0000"]
+				}
+			} else if (color_type == "manual") {
+				var color = [$('#color_profile').val(), $('#color_contents').val()]
+				text_color = $('#color_text').val()
+			}
+			liff.sendMessages([{
+				"type": "flex",
+				"altText": `${window.idToken["name"]}さんがスーパーチャットをしました。`,
+				"contents": {
+					"type": "bubble",
+					"header": {
+						"type": "box",
+						"layout": "vertical",
+						"contents": [
+							{
+								"type": "box",
+								"layout": "baseline",
+								"contents": [
+									{
+										"type": "icon",
+										"url": window.idToken["picture"]
+									},
+									{
+										"type": "text",
+										"text": window.idToken["name"],
+										"color": text_color,
+										"weight": "bold",
+										"size": "md"
+									}
+								],
+								"margin": "none",
+								"spacing": "none"
+							},
+							{
+								"type": "text",
+								"text": "¥" + String(yen),
+								"color": text_color
+							}
+						],
+						"backgroundColor": color[0]
+					},
+					"body": {
+						"type": "box",
+						"layout": "vertical",
+						"contents": [
+							{
+								"type": "text",
+								"size": "lg",
+								"text": contents,
+								"color": text_color,
+								"wrap": true
+							}
+						],
+						"backgroundColor": color[1]
+					}
+				}
+			}])
+				.then(function () {
+					liff.closeWindow();
+				}).catch(function (error) {
+					alert(error);
+				});
+		});
 
-        $(function () {
-            $('input[name="color_type"]:radio').change(function () {
-                var radioval = $(this).val();
-                if (radioval == "manual") {
-                    $('#color_profile, #color_contents, #color_text, #color_label').show();
-                } else {
-                    $('#color_profile, #color_contents, #color_text, #color_label').hide();
-                }
-            });
-        });
-    </script>
+		$(function () {
+			$('input[name="color_type"]:radio').change(function () {
+				var radioval = $(this).val();
+				if (radioval == "manual") {
+					$('#color_profile, #color_contents, #color_text, #color_label').show();
+				} else {
+					$('#color_profile, #color_contents, #color_text, #color_label').hide();
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>
